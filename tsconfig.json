@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "target": "es6", // Specifies the ECMAScript version to target
+    "module": "commonjs", // Specifies the module system to use (e.g., CommonJS, ES modules)
+    "lib": ["es6", "dom"], // Specifies the default libraries to include (e.g., ES6 and DOM)
+    "strict": true, // Enables strict type checking
+    "esModuleInterop": true, // Enables interoperability between CommonJS and ES modules
+    "skipLibCheck": true, // Skips type checking of declaration files (*.d.ts)
+    "forceConsistentCasingInFileNames": true, // Enforces consistent file name casing
+    "resolveJsonModule": true, // Enables importing JSON files as modules
+    "declaration": true, // Generates declaration files (*.d.ts) for TypeScript modules
+    "declarationDir": "dist", // Specifies the output directory for declaration files
+    "sourceMap": true, // Generates source maps for easier debugging
+    "outDir": "dist", // Specifies the output directory for compiled JavaScript files
+    "noImplicitAny": true, // Disallows the use of the `any` type without an explicit type annotation
+    "noUnusedLocals": true, // Reports unused local variables as errors
+    "noUnusedParameters": true, // Reports unused function parameters as errors
+    "strictNullChecks": true, // Enables strict null checks to prevent null and undefined errors
+    "noImplicitThis": true, // Disallows the use of `this` without an explicit type annotation
+    "alwaysStrict": true, // Enables strict mode in generated JavaScript files
+    "baseUrl": ".", // Specifies the base URL for module resolution
+    "paths": {
+      "*": ["node_modules/*"] // Configures module resolution aliases
+    }
+  },
+  "include": ["src", ".eslintrc.js"], // Specifies the directory to include for compilation
+  "exclude": ["node_modules", "dist"] // Specifies the directories to exclude from compilation
+}
