@@ -1,6 +1,17 @@
+import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { ThemeProvider } from '@mui/material';
 import App from './App';
+import theme from './shared/theme';
+import store from './shared/store';
 
-const container = document.getElementById('app');
+const container = document.getElementById('app') as HTMLElement;
 const root = createRoot(container);
-root.render(<App />);
+root.render(
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
+  </Provider>
+);
