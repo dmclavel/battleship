@@ -58,15 +58,25 @@ const initializeBoardReducer = (
   const positionsObject: { [key: string]: Ship } = {};
   layout.forEach(({ positions, ship }) => {
     positions.forEach((coordinates) => {
+      /**
+       * Based on given ship positions, create a `positionsObject`
+       * with combined x,y coordinates as key containing the ship type (e.g. carrier)
+       */
       positionsObject[coordinates.join(',')] = ship;
     });
   });
 
-  state.board = Array.from(Array(BOARD_DIMENSIONS)).map((_, index1D) =>
-    Array.from(Array(BOARD_DIMENSIONS)).map((_, index2D) => {
-      const shipTypeOnCoordinate = positionsObject[`${index1D},${index2D}`];
+  state.board = Array.from(Array(BOARD_DIMENSIONS)).map((_, rowIndex) =>
+    Array.from(Array(BOARD_DIMENSIONS)).map((_, columnIndex) => {
+      /**
+       * Use combined rowIndex,columnIndex coordinates as the key to access
+       * `positionsObject` which contains the ship type (e.g. carrier) or undefined if no ship
+       * is positioned in those given coordinates
+       */
+      const shipTypeOnCoordinate: Ship | undefined =
+        positionsObject[`${rowIndex},${columnIndex}`];
       return {
-        id: `board-box-${index1D},${index2D}`,
+        id: `board-box-${rowIndex},${columnIndex}`,
         hitTimestamp: 0,
         shipType: shipTypeOnCoordinate,
       };
@@ -83,13 +93,32 @@ const updateBoardReducer = (
   const timestamp = new Date().getTime();
   state.board[rowIndex][columnIndex].hitTimestamp = timestamp;
 
+  /**
+   * Skip implementation below if no ship is positioned in the
+   * clicked board "square"
+   */
   if (shipType === undefined) return state;
 
   const battleshipState = state.battleships[shipType];
+  /**
+   * If there is a ship in the clicked board "square",
+   * update `battleships` to add x,y coordinates as key
+   * with the timestamp when the clicked is trigerred
+   */
   const newCoordinates = {
     ...battleshipState?.coordinates,
     [`${rowIndex},${columnIndex}`]: timestamp,
   };
+  /**
+   * If there is a ship (e.g. carrier) in the clicked coordinates (e.g. 5,5):
+   * state.battleships.carrier = {
+   *  coordinates: {
+   *    ...<previously clicked coordinates>
+   *    '5,5': <timestamp>,
+   *  }
+   * }
+   * This makes knowing which ship is already hit much easier.
+   */
   state.battleships[shipType] = {
     coordinates: newCoordinates,
   };
