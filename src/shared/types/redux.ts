@@ -1,5 +1,5 @@
-import { AnyAction, ThunkAction } from '@reduxjs/toolkit';
-import { RootState } from '../store';
+import type { AnyAction, ThunkAction } from '@reduxjs/toolkit';
+import type { RootState } from '../store';
 
 type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,

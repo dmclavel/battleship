@@ -1,7 +1,10 @@
-import { Dispatch } from '@reduxjs/toolkit';
-import boardConfig from '../../shared/board.json';
-import { initializeBoard, updateImportInfo } from './boardSlice';
-import { AppThunk } from '../../shared/types/redux';
+import { initializeBoard, updateImportInfo, updateBoard } from './boardSlice';
+import { updatePlayer } from '../players/playersSlice';
+
+import type { Dispatch } from '@reduxjs/toolkit';
+import type boardConfig from '../../shared/board.json';
+import type { AppThunk } from '../../shared/types/redux';
+import type { UpdateBoardPayload } from './boardSlice';
 
 type ErrorState = {
   isError: boolean;
@@ -49,4 +52,24 @@ const readBoardConfig = (boardConfigObj: typeof boardConfig): AppThunk => {
   };
 };
 
-export { readBoardConfig, ErrorState };
+const updateBoardAndPlayer = (
+  boardUpdateInfo: UpdateBoardPayload
+): AppThunk => {
+  return (dispatch: Dispatch, getState) => {
+    const state = getState();
+    dispatch(updateBoard(boardUpdateInfo));
+    if (
+      typeof state.boardReducer.activePlayerId === 'string' &&
+      boardUpdateInfo.shipType
+    ) {
+      dispatch(
+        updatePlayer({
+          playerId: state.boardReducer.activePlayerId,
+          point: 1,
+        })
+      );
+    }
+  };
+};
+
+export { readBoardConfig, updateBoardAndPlayer, ErrorState };

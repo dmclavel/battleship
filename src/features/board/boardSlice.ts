@@ -1,6 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import boardConfig from '../../shared/board.json';
-import { type ErrorState } from './actions';
+import { createSlice } from '@reduxjs/toolkit';
+
+import type { PayloadAction } from '@reduxjs/toolkit';
+import type { ErrorState } from './actions';
+import type boardConfig from '../../shared/board.json';
 
 type Ship =
   | 'carrier'
@@ -14,6 +16,7 @@ type ImportStatus = 'success' | 'error' | 'ongoing' | 'default';
 
 type BoardBlock = {
   hitTimestamp: EpochTimeStamp;
+  hitBy?: string;
   shipType?: Ship;
   id: string;
 };
@@ -25,7 +28,10 @@ type ImportState = {
 
 type BattleshipState = {
   coordinates?: {
-    [key: string]: EpochTimeStamp;
+    [key: string]: {
+      hitTimestamp: EpochTimeStamp;
+      hitBy?: string;
+    };
   };
 };
 
@@ -35,13 +41,14 @@ type UpdateBoardPayload = {
   shipType?: Ship;
 };
 
-interface BoardState {
+interface Board {
   board: Array<Array<BoardBlock>>;
   battleships: { [key in Ship]?: BattleshipState };
+  activePlayerId?: string;
   import: ImportState;
 }
 
-const initialState: BoardState = {
+const initialState: Board = {
   board: [],
   battleships: {},
   import: { status: 'default' },
@@ -50,7 +57,7 @@ const initialState: BoardState = {
 const BOARD_DIMENSIONS = 10;
 
 const initializeBoardReducer = (
-  state: BoardState,
+  state: Board,
   action: PayloadAction<typeof boardConfig>
 ) => {
   const { layout } = action.payload;
@@ -86,12 +93,13 @@ const initializeBoardReducer = (
 };
 
 const updateBoardReducer = (
-  state: BoardState,
+  state: Board,
   action: PayloadAction<UpdateBoardPayload>
 ) => {
   const { rowIndex, columnIndex, shipType } = action.payload;
   const timestamp = new Date().getTime();
   state.board[rowIndex][columnIndex].hitTimestamp = timestamp;
+  state.board[rowIndex][columnIndex].hitBy = state.activePlayerId;
 
   /**
    * Skip implementation below if no ship is positioned in the
@@ -107,7 +115,10 @@ const updateBoardReducer = (
    */
   const newCoordinates = {
     ...battleshipState?.coordinates,
-    [`${rowIndex},${columnIndex}`]: timestamp,
+    [`${rowIndex},${columnIndex}`]: {
+      hitBy: state.activePlayerId,
+      hitTimestamp: timestamp,
+    },
   };
   /**
    * If there is a ship (e.g. carrier) in the clicked coordinates (e.g. 5,5):
@@ -126,11 +137,19 @@ const updateBoardReducer = (
 };
 
 const updateImportInfoReducer = (
-  state: BoardState,
+  state: Board,
   action: PayloadAction<ErrorState>
 ) => {
   state.import.status = action.payload.isError ? 'error' : 'success';
   state.import.message = action.payload.message;
+  return state;
+};
+
+const updateActivePlayerReducer = (
+  state: Board,
+  action: PayloadAction<string>
+) => {
+  state.activePlayerId = action.payload;
   return state;
 };
 
@@ -141,18 +160,21 @@ const boardSlice = createSlice({
     initializeBoard: initializeBoardReducer,
     updateBoard: updateBoardReducer,
     updateImportInfo: updateImportInfoReducer,
+    updateActivePlayer: updateActivePlayerReducer,
   },
 });
 
-const { initializeBoard, updateBoard, updateImportInfo } = boardSlice.actions;
+const { initializeBoard, updateBoard, updateImportInfo, updateActivePlayer } =
+  boardSlice.actions;
 
 export {
-  type BoardState,
+  type Board,
   type Ship,
   type BattleshipState,
   type UpdateBoardPayload,
   initializeBoard,
   updateBoard,
   updateImportInfo,
+  updateActivePlayer,
 };
 export default boardSlice.reducer;

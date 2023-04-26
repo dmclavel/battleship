@@ -1,6 +1,8 @@
-import React, { FC, SyntheticEvent, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import Button from '@mui/material/Button';
-import { BattleshipState } from './boardSlice';
+
+import type { FC, SyntheticEvent } from 'react';
+import type { BattleshipState } from './boardSlice';
 
 interface SquareProps {
   battleshipInfo?: BattleshipState;
@@ -15,7 +17,10 @@ const Square: FC<SquareProps> = ({
   isHit,
   onClick,
 }) => {
-  const isAMiss = useMemo(() => !Boolean(battleshipInfo?.coordinates?.[coordinates]), [battleshipInfo]);
+  const isAMiss = useMemo(
+    () => !battleshipInfo?.coordinates?.[coordinates],
+    [battleshipInfo]
+  );
 
   return (
     <Button
@@ -27,7 +32,7 @@ const Square: FC<SquareProps> = ({
         backgroundColor: 'grey.100',
         '&:hover': {
           backgroundColor: 'primary.500',
-        }
+        },
       }}
       onClick={onClick}
     >
