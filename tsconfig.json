@@ -3,7 +3,7 @@
     "jsx": "react",
     "target": "es6", // Specifies the ECMAScript version to target
     "module": "commonjs", // Specifies the module system to use (e.g., CommonJS, ES modules)
-    "lib": ["es6", "dom"], // Specifies the default libraries to include (e.g., ES6 and DOM)
+    "lib": ["es2017", "dom"], // Specifies the default libraries to include (e.g., ES6 and DOM)
     "strict": true, // Enables strict type checking
     "esModuleInterop": true, // Enables interoperability between CommonJS and ES modules
     "skipLibCheck": true, // Skips type checking of declaration files (*.d.ts)

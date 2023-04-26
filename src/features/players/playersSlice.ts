@@ -3,11 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface Player {
   id: string;
+  order: number;
   points: number;
 }
 
 interface Players {
-  players: Partial<{ [key: string]: Player }>;
+  players: { [key: string]: Player };
 }
 
 const initialState: Players = {
@@ -18,10 +19,11 @@ const initializePlayersReducer = (
   state: Players,
   action: PayloadAction<Array<string>>
 ) => {
-  action.payload.forEach((playerId) => {
+  action.payload.forEach((playerId, index) => {
     if (playerId)
       state.players[playerId] = {
         id: playerId,
+        order: index + 1,
         points: 0,
       };
   });
@@ -51,5 +53,5 @@ const playersSlice = createSlice({
 
 const { initializePlayers, updatePlayer } = playersSlice.actions;
 
-export { type Players, initializePlayers, updatePlayer };
+export { type Players, type Player, initializePlayers, updatePlayer };
 export default playersSlice.reducer;

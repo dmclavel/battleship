@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { readBoardConfig, updateBoardAndPlayer } from './actions';
-import boardConfigFromJSONFile from '../../shared/board.json';
 
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import Box from '@mui/material/Box';
@@ -11,6 +10,7 @@ import type { FC } from 'react';
 import type { ConnectedProps } from 'react-redux';
 import type { AppDispatch, RootState } from '../../shared/store';
 import type { UpdateBoardPayload, Ship } from './boardSlice';
+import type boardConfigFromJSONFile from '../../shared/board.json';
 
 const mapStateToProps = (state: RootState) => ({
   board: state.boardReducer.board,
@@ -27,16 +27,19 @@ const mapDispatchToProps = (dispatch: AppDispatch) => ({
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
-type BoardProps = PropsFromRedux;
+type BoardProps = PropsFromRedux & {
+  boardConfig: typeof boardConfigFromJSONFile;
+};
 
 const Board: FC<BoardProps> = ({
   dispatchInitializeBoard,
   dispatchUpdateBoard,
   board,
+  boardConfig,
   battleships,
 }) => {
   useEffect(() => {
-    dispatchInitializeBoard(boardConfigFromJSONFile);
+    dispatchInitializeBoard(boardConfig);
   }, []);
 
   const handleSquareClick = (
