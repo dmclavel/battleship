@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { readBoardConfig, updateBoardAndPlayer } from './actions';
 
-import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
+import Grid2 from '@mui/material/Unstable_Grid2';
 import Box from '@mui/material/Box';
 import Square from './Square';
 

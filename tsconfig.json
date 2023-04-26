@@ -21,7 +21,8 @@
     "alwaysStrict": true, // Enables strict mode in generated JavaScript files
     "baseUrl": ".", // Specifies the base URL for module resolution
     "paths": {
-      "*": ["node_modules/*"] // Configures module resolution aliases
+      "*": ["node_modules/*"], // Configures module resolution aliases
+      "test-utils": ["./src/test-utils"]
     }
   },
   "include": ["src", ".eslintrc.js"], // Specifies the directory to include for compilation

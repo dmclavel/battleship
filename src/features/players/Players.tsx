@@ -3,7 +3,7 @@ import { connect, type ConnectedProps } from 'react-redux';
 import { initializePlayersList } from './actions';
 
 import Box from '@mui/material/Box';
-import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
+import Grid2 from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 
 import type { FC } from 'react';
@@ -44,7 +44,7 @@ const Players: FC<BoardProps> = ({
       <Typography>
         Player {player.order}
       </Typography>
-      <Typography>
+      <Typography data-testid={`${player.id}-score`}>
         {player.points}
       </Typography>
     </Grid2>
