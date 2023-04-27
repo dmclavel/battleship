@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { readBoardConfig, updateBoardAndPlayer } from './actions';
+import { selectWinningCondition } from './selectors';
 
 import Grid2 from '@mui/material/Unstable_Grid2';
 import Box from '@mui/material/Box';
@@ -38,6 +39,8 @@ const Board: FC<BoardProps> = ({
   boardConfig,
   battleships,
 }) => {
+  useSelector(selectWinningCondition);
+
   useEffect(() => {
     dispatchInitializeBoard(boardConfig);
   }, []);

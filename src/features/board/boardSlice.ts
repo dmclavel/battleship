@@ -26,13 +26,15 @@ type ImportState = {
   message?: string;
 };
 
-type BattleshipState = {
-  coordinates?: {
-    [key: string]: {
-      hitTimestamp: EpochTimeStamp;
-      hitBy?: string;
-    };
+type HitInfo = {
+  [key: string]: {
+    hitTimestamp: EpochTimeStamp;
+    hitBy?: string;
   };
+};
+
+type BattleshipState = {
+  coordinates?: HitInfo;
 };
 
 type UpdateBoardPayload = {
@@ -42,8 +44,13 @@ type UpdateBoardPayload = {
 };
 
 interface Board {
+  // N x N board
   board: Array<Array<BoardBlock>>;
+  // Ships that are hit by players
   battleships: { [key in Ship]?: BattleshipState };
+  // Loaded ships from the board configuration
+  shipsInfo: { [key: string]: Ship };
+  // Current player to hit
   activePlayerId?: string;
   import: ImportState;
 }
@@ -51,6 +58,7 @@ interface Board {
 const initialState: Board = {
   board: [],
   battleships: {},
+  shipsInfo: {},
   import: { status: 'default' },
 };
 
@@ -73,6 +81,7 @@ const initializeBoardReducer = (
     });
   });
 
+  state.shipsInfo = positionsObject;
   state.board = Array.from(Array(BOARD_DIMENSIONS)).map((_, rowIndex) =>
     Array.from(Array(BOARD_DIMENSIONS)).map((_, columnIndex) => {
       /**
@@ -170,6 +179,7 @@ const { initializeBoard, updateBoard, updateImportInfo, updateActivePlayer } =
 export {
   type Board,
   type Ship,
+  type HitInfo,
   type BattleshipState,
   type UpdateBoardPayload,
   initializeBoard,
