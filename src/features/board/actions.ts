@@ -1,10 +1,10 @@
 import { initializeBoard, updateImportInfo, updateBoard } from './boardSlice';
 import { updatePlayer } from '../players/playersSlice';
+import { initializeShips, updateShips } from '../ships/shipsSlice';
 
 import type { Dispatch } from '@reduxjs/toolkit';
 import type boardConfig from '../../shared/board.json';
-import type { AppThunk } from '../../shared/types/redux';
-import type { UpdateBoardPayload } from './boardSlice';
+import type { AppThunk, UpdateGamePayload } from '../../shared/types/redux';
 
 type ErrorState = {
   isError: boolean;
@@ -45,23 +45,22 @@ const readBoardConfig = (boardConfigObj: typeof boardConfig): AppThunk => {
       await validateBoardConfig(boardConfigObj);
 
       dispatch(updateImportInfo({ isError: false, message: '' }));
-      dispatch(initializeBoard(boardConfigObj));
+      dispatch(initializeBoard());
+      dispatch(initializeShips(boardConfigObj));
     } catch (error) {
       dispatch(updateImportInfo(error as ErrorState));
     }
   };
 };
 
-const updateBoardAndPlayer = (
-  boardUpdateInfo: UpdateBoardPayload
-): AppThunk => {
+const updateGameState = (boardUpdateInfo: UpdateGamePayload): AppThunk => {
   return (dispatch: Dispatch, getState) => {
     const state = getState();
+    const coordinates = `${boardUpdateInfo.rowIndex},${boardUpdateInfo.columnIndex}`;
+    const shipType = state.shipsReducer.loadedShips[coordinates];
     dispatch(updateBoard(boardUpdateInfo));
-    if (
-      typeof state.boardReducer.activePlayerId === 'string' &&
-      boardUpdateInfo.shipType
-    ) {
+    dispatch(updateShips(boardUpdateInfo));
+    if (typeof state.boardReducer.activePlayerId === 'string' && shipType) {
       dispatch(
         updatePlayer({
           playerId: state.boardReducer.activePlayerId,
@@ -72,4 +71,4 @@ const updateBoardAndPlayer = (
   };
 };
 
-export { readBoardConfig, updateBoardAndPlayer, ErrorState };
+export { readBoardConfig, updateGameState, ErrorState };

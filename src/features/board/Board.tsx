@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { readBoardConfig, updateBoardAndPlayer } from './actions';
+import { readBoardConfig, updateGameState } from './actions';
 import { selectWinningCondition } from './selectors';
 
 import Grid2 from '@mui/material/Unstable_Grid2';
@@ -10,19 +10,20 @@ import Square from './Square';
 import type { FC } from 'react';
 import type { ConnectedProps } from 'react-redux';
 import type { AppDispatch, RootState } from '../../shared/store';
-import type { UpdateBoardPayload, Ship } from './boardSlice';
+import type { UpdateGamePayload } from '../../shared/types/redux';
 import type boardConfigFromJSONFile from '../../shared/board.json';
 
 const mapStateToProps = (state: RootState) => ({
   board: state.boardReducer.board,
-  battleships: state.boardReducer.battleships,
+  loadedShips: state.shipsReducer.loadedShips,
+  sunkShips: state.shipsReducer.sunkShips,
 });
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
   dispatchInitializeBoard: (boardConfig: typeof boardConfigFromJSONFile) =>
     dispatch(readBoardConfig(boardConfig)),
-  dispatchUpdateBoard: (payload: UpdateBoardPayload) =>
-    dispatch(updateBoardAndPlayer(payload)),
+  dispatchUpdateBoard: (payload: UpdateGamePayload) =>
+    dispatch(updateGameState(payload)),
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -37,7 +38,8 @@ const Board: FC<BoardProps> = ({
   dispatchUpdateBoard,
   board,
   boardConfig,
-  battleships,
+  loadedShips,
+  sunkShips,
 }) => {
   useSelector(selectWinningCondition);
 
@@ -48,12 +50,10 @@ const Board: FC<BoardProps> = ({
   const handleSquareClick = (
     rowIndex: number,
     columnIndex: number,
-    shipType?: Ship
   ) => {
     dispatchUpdateBoard({
       rowIndex,
       columnIndex,
-      shipType,
     });
   };
 
@@ -68,18 +68,22 @@ const Board: FC<BoardProps> = ({
             tablet={12}
             mobile={12}
           >
-            {row.map(({ id, shipType, hitTimestamp }, columnIndex) => (
-              <Grid2 key={id} desktop={1} tablet={1} mobile={1}>
-                <Square
-                  battleshipInfo={battleships[shipType ?? '']}
-                  coordinates={`${rowIndex},${columnIndex}`}
-                  isHit={Boolean(hitTimestamp)}
-                  onClick={() => {
-                    handleSquareClick(rowIndex, columnIndex, shipType);
-                  }}
-                />
-              </Grid2>
-            ))}
+            {row.map(({ id, hitTimestamp }, columnIndex) => {
+              const coordinates = `${rowIndex},${columnIndex}`;
+              const shipType = loadedShips[coordinates];
+              return (
+                <Grid2 key={id} desktop={1} tablet={1} mobile={1}>
+                  <Square
+                    battleshipInfo={sunkShips[shipType]}
+                    coordinates={`${rowIndex},${columnIndex}`}
+                    isHit={Boolean(hitTimestamp)}
+                    onClick={() => {
+                      handleSquareClick(rowIndex, columnIndex);
+                    }}
+                  />
+                </Grid2>
+              );
+            })}
           </Grid2>
         ))}
       </Grid2>

@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import Button from '@mui/material/Button';
 
 import type { FC, SyntheticEvent } from 'react';
-import type { BattleshipState } from './boardSlice';
+import type { BattleshipState } from '../../shared/types/redux';
 
 interface SquareProps {
   battleshipInfo?: BattleshipState;

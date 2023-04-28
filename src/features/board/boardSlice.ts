@@ -2,22 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { ErrorState } from './actions';
-import type boardConfig from '../../shared/board.json';
-
-type Ship =
-  | 'carrier'
-  | 'battleship'
-  | 'cruiser'
-  | 'submarine'
-  | 'destroyer'
-  | (string & {});
+import type { UpdateGamePayload } from '../../shared/types/redux';
 
 type ImportStatus = 'success' | 'error' | 'ongoing' | 'default';
 
 type BoardBlock = {
   hitTimestamp: EpochTimeStamp;
   hitBy?: string;
-  shipType?: Ship;
   id: string;
 };
 
@@ -26,30 +17,9 @@ type ImportState = {
   message?: string;
 };
 
-type HitInfo = {
-  [key: string]: {
-    hitTimestamp: EpochTimeStamp;
-    hitBy?: string;
-  };
-};
-
-type BattleshipState = {
-  coordinates?: HitInfo;
-};
-
-type UpdateBoardPayload = {
-  rowIndex: number;
-  columnIndex: number;
-  shipType?: Ship;
-};
-
 interface Board {
   // N x N board
   board: Array<Array<BoardBlock>>;
-  // Ships that are hit by players
-  battleships: { [key in Ship]?: BattleshipState };
-  // Loaded ships from the board configuration
-  shipsInfo: { [key: string]: Ship };
   // Current player to hit
   activePlayerId?: string;
   import: ImportState;
@@ -57,44 +27,17 @@ interface Board {
 
 const initialState: Board = {
   board: [],
-  battleships: {},
-  shipsInfo: {},
   import: { status: 'default' },
 };
 
 const BOARD_DIMENSIONS = 10;
 
-const initializeBoardReducer = (
-  state: Board,
-  action: PayloadAction<typeof boardConfig>
-) => {
-  const { layout } = action.payload;
-
-  const positionsObject: { [key: string]: Ship } = {};
-  layout.forEach(({ positions, ship }) => {
-    positions.forEach((coordinates) => {
-      /**
-       * Based on given ship positions, create a `positionsObject`
-       * with combined x,y coordinates as key containing the ship type (e.g. carrier)
-       */
-      positionsObject[coordinates.join(',')] = ship;
-    });
-  });
-
-  state.shipsInfo = positionsObject;
+const initializeBoardReducer = (state: Board) => {
   state.board = Array.from(Array(BOARD_DIMENSIONS)).map((_, rowIndex) =>
     Array.from(Array(BOARD_DIMENSIONS)).map((_, columnIndex) => {
-      /**
-       * Use combined rowIndex,columnIndex coordinates as the key to access
-       * `positionsObject` which contains the ship type (e.g. carrier) or undefined if no ship
-       * is positioned in those given coordinates
-       */
-      const shipTypeOnCoordinate: Ship | undefined =
-        positionsObject[`${rowIndex},${columnIndex}`];
       return {
         id: `board-box-${rowIndex},${columnIndex}`,
         hitTimestamp: 0,
-        shipType: shipTypeOnCoordinate,
       };
     })
   );
@@ -103,45 +46,13 @@ const initializeBoardReducer = (
 
 const updateBoardReducer = (
   state: Board,
-  action: PayloadAction<UpdateBoardPayload>
+  action: PayloadAction<UpdateGamePayload>
 ) => {
-  const { rowIndex, columnIndex, shipType } = action.payload;
+  const { rowIndex, columnIndex } = action.payload;
   const timestamp = new Date().getTime();
   state.board[rowIndex][columnIndex].hitTimestamp = timestamp;
   state.board[rowIndex][columnIndex].hitBy = state.activePlayerId;
 
-  /**
-   * Skip implementation below if no ship is positioned in the
-   * clicked board "square"
-   */
-  if (shipType === undefined) return state;
-
-  const battleshipState = state.battleships[shipType];
-  /**
-   * If there is a ship in the clicked board "square",
-   * update `battleships` to add x,y coordinates as key
-   * with the timestamp when the clicked is trigerred
-   */
-  const newCoordinates = {
-    ...battleshipState?.coordinates,
-    [`${rowIndex},${columnIndex}`]: {
-      hitBy: state.activePlayerId,
-      hitTimestamp: timestamp,
-    },
-  };
-  /**
-   * If there is a ship (e.g. carrier) in the clicked coordinates (e.g. 5,5):
-   * state.battleships.carrier = {
-   *  coordinates: {
-   *    ...<previously clicked coordinates>
-   *    '5,5': <timestamp>,
-   *  }
-   * }
-   * This makes knowing which ship is already hit much easier.
-   */
-  state.battleships[shipType] = {
-    coordinates: newCoordinates,
-  };
   return state;
 };
 
@@ -178,10 +89,6 @@ const { initializeBoard, updateBoard, updateImportInfo, updateActivePlayer } =
 
 export {
   type Board,
-  type Ship,
-  type HitInfo,
-  type BattleshipState,
-  type UpdateBoardPayload,
   initializeBoard,
   updateBoard,
   updateImportInfo,

@@ -1,9 +1,9 @@
 import type { RootState } from '../../shared/store';
-import type { BattleshipState, HitInfo } from './boardSlice';
+import type { BattleshipState, HitInfo } from '../../shared/types/redux';
 
 const selectWinningCondition = (state: RootState) => {
-  const loadedShips = state.boardReducer.shipsInfo;
-  const sunkShips = state.boardReducer.battleships;
+  const loadedShips = state.shipsReducer.loadedShips;
+  const sunkShips = state.shipsReducer.sunkShips;
 
   const allShipsSunk = Object.keys(loadedShips).every((coordinates) => {
     const ship = loadedShips[coordinates];
