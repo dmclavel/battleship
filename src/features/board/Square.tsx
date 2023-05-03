@@ -1,5 +1,7 @@
 import React, { useMemo } from 'react';
+import { HIT_OR_MISS_IMAGES } from '../../shared/constants/assets';
 
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
 import type { FC, SyntheticEvent } from 'react';
@@ -37,7 +39,17 @@ const Square: FC<SquareProps> = ({
       }}
       onClick={onClick}
     >
-      {isHit && (isAMiss ? 'Miss' : 'Hit')}
+      {isHit && (
+        <Box
+          component="img"
+          sx={{
+            width: '1rem',
+            height: '1rem',
+          }}
+          alt={isAMiss ? 'miss' : 'hit'}
+          src={isAMiss ? HIT_OR_MISS_IMAGES.miss : HIT_OR_MISS_IMAGES.hit}
+        />
+      )}
     </Button>
   );
 };
