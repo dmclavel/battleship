@@ -29,7 +29,12 @@ const Ships: FC<ShipsProps> = ({
         flexDirection="column"
       >
         {shipsLayout.map(({ ship, positions }) => (
-          <Ship shipType={ship} positions={positions} sunkShips={sunkShips} />
+          <Ship
+            key={`${ship}-${positions.toString()}`}
+            shipType={ship}
+            positions={positions}
+            sunkShips={sunkShips}
+          />
         ))}
       </Grid>
     </>

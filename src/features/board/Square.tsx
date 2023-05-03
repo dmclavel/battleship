@@ -10,6 +10,7 @@ import type { BattleshipState } from '../../shared/types/redux';
 interface SquareProps {
   battleshipInfo?: BattleshipState;
   coordinates: string;
+  hasWon: boolean;
   isHit: boolean;
   onClick: (event: SyntheticEvent) => void;
 }
@@ -17,6 +18,7 @@ interface SquareProps {
 const Square: FC<SquareProps> = ({
   battleshipInfo,
   coordinates,
+  hasWon,
   isHit,
   onClick,
 }) => {
@@ -27,11 +29,16 @@ const Square: FC<SquareProps> = ({
 
   return (
     <Button
-      disabled={isHit}
+      disabled={isHit || hasWon}
       type="button"
       sx={{
-        width: 50,
-        height: 50,
+        width: [50, 50, 50],
+        height: [50, 50, 50],
+        padding: 0,
+        minWidth: 'unset',
+        borderRadius: 0,
+        border: '1px solid',
+        borderColor: 'grey.300',
         backgroundColor: 'grey.100',
         '&:hover': {
           backgroundColor: 'primary.500',
@@ -43,8 +50,8 @@ const Square: FC<SquareProps> = ({
         <Box
           component="img"
           sx={{
-            width: '1rem',
-            height: '1rem',
+            width: 'inherit',
+            height: 'inherit',
           }}
           alt={isAMiss ? 'miss' : 'hit'}
           src={isAMiss ? HIT_OR_MISS_IMAGES.miss : HIT_OR_MISS_IMAGES.hit}

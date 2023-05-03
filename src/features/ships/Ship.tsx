@@ -32,22 +32,33 @@ const Ship: FC<ShipProps> = ({
   shipType,
   sunkShips,
 }) => {
-  const sortValue = {
+  const sortValue: {
+    [key in 'hitSmall' | 'missSmall' | (string & {})]: 1 | -1;
+  } = {
     hitSmall: 1,
     missSmall: -1,
   };
-  const hitOrMissCircles = (() => (
+  const hitOrMissCircles: Array<{
+    uniqueId: string;
+    imgKey: string;
+  }> = (() => (
     positions.map((position) => {
       const coordinates = position.join(',');
       const shipCoordinates = sunkShips[shipType]?.coordinates ?? {};
       const isAHit = Boolean(shipCoordinates[coordinates]);
 
-      return isAHit ? 'hitSmall' : 'missSmall';
+      return {
+        uniqueId: `hit-identifier-${coordinates}`,
+        imgKey: isAHit ? 'hitSmall' : 'missSmall',
+      };
     })
-  ))().sort((a, b) => sortValue[b] - sortValue[a]);
+  ))().sort((a, b) => sortValue[b.imgKey] - sortValue[a.imgKey]);
 
   return (
-    <Grid alignItems="center" columnGap={1}>
+    <Grid
+      alignItems="center"
+      columnGap={1}
+    >
       <Box
         component="img"
         sx={{
@@ -58,16 +69,17 @@ const Ship: FC<ShipProps> = ({
         src={SHIP_IMAGES[shipType] ?? SHIP_IMAGES.battleship}
       />
       <Grid>
-        {hitOrMissCircles.map((imgKey) => {
+        {hitOrMissCircles.map((imgInfo) => {
           return (
             <Box
+              key={imgInfo.uniqueId}
               component="img"
               sx={{
                 width: '1rem',
                 height: 'auto',
               }}
-              alt={imgKey === 'hitSmall' ? 'hit' : 'miss'}
-              src={HIT_OR_MISS_IMAGES[imgKey]}
+              alt={imgInfo.imgKey === 'hitSmall' ? 'hit' : 'miss'}
+              src={HIT_OR_MISS_IMAGES[imgInfo.imgKey as ('hitSmall' | 'missSmall')]}
             />
           );
         })}

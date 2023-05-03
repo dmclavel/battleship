@@ -41,7 +41,7 @@ const Board: FC<BoardProps> = ({
   loadedShips,
   sunkShips,
 }) => {
-  useSelector(selectWinningCondition);
+  const hasWon = useSelector(selectWinningCondition);
 
   useEffect(() => {
     dispatchInitializeBoard(boardConfig);
@@ -55,8 +55,21 @@ const Board: FC<BoardProps> = ({
   };
 
   return (
-    <Box>
-      <Grid container gap={1}>
+    <Box
+      sx={{
+        width: ['500px', '500px', '500px'],
+        padding: '0.5rem',
+        borderRadius: '4px',
+        backgroundColor: 'primary.500',
+      }}
+    >
+      <Grid
+        container
+        sx={{
+          width: 'inherit',
+          backgroundColor: 'primary.400',
+        }}
+      >
         {board.map((row, rowIndex) => (
           <Grid
             key={Symbol(row[0].id).toString()}
@@ -68,10 +81,13 @@ const Board: FC<BoardProps> = ({
               const coordinates = `${rowIndex},${columnIndex}`;
               const shipType = loadedShips[coordinates];
               return (
-                <Grid key={id} desktop={1} tablet={1} mobile={1}>
+                <Grid
+                  key={id}
+                >
                   <Square
                     battleshipInfo={sunkShips[shipType]}
                     coordinates={`${rowIndex},${columnIndex}`}
+                    hasWon={hasWon}
                     isHit={Boolean(hitTimestamp)}
                     onClick={() => {
                       handleSquareClick(rowIndex, columnIndex);
