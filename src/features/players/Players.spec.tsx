@@ -4,15 +4,11 @@ import { screen, render } from 'test-utils';
 import Players from './Players';
 
 const samplePlayersConfig = {
-  players: [
-    'id-1',
-    'id-2',
-  ],
+  players: ['id-1', 'id-2'],
 };
 
-const renderPlayers = () => render(
-  <Players playersConfig={samplePlayersConfig} />,
-);
+const renderPlayers = () =>
+  render(<Players playersConfig={samplePlayersConfig} />);
 
 describe('Players', () => {
   beforeEach(() => {

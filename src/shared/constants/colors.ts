@@ -1,4 +1,4 @@
-import { type CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 
 type Hue = 500 | 400 | 300 | 200 | 100 | 'main';
 type Feedback = 'success' | 'warning' | 'error' | 'info';

@@ -4,14 +4,15 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2021, // Specifies the ECMAScript version to use
     sourceType: 'module', // Specifies the source type (e.g., 'module' for ECMAScript modules)
-    project: './tsconfig.json', // Specifies the path to your TypeScript configuration file
+    project: true,
+    tsconfigRootDir: __dirname,
   },
   extends: [
     'eslint:recommended', // Extends the recommended ESLint rules
     'plugin:@typescript-eslint/recommended', // Extends the recommended TypeScript ESLint rules
     'plugin:prettier/recommended', // Integrates Prettier with ESLint
   ],
-  ignorePatterns: ['node_modules', 'dist'],
+  ignorePatterns: ['node_modules', 'dist', 'jest.config.js'],
   plugins: [
     '@typescript-eslint', // Adds the TypeScript ESLint plugin
     // Add any additional plugins you want to use
@@ -26,5 +27,6 @@ module.exports = {
   },
   rules: {
     '@typescript-eslint/consistent-type-imports': 'error',
+    '@typescript-eslint/ban-types': 'warn',
   },
 };

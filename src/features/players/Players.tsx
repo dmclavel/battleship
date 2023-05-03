@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
-import { connect, type ConnectedProps } from 'react-redux';
+import { connect } from 'react-redux';
 import { initializePlayersList } from './actions';
 
 import Box from '@mui/material/Box';
-import Grid2 from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
+import Grid from '../../common/Grid';
 
 import type { FC } from 'react';
+import type { ConnectedProps } from 'react-redux';
 import type { AppDispatch, RootState } from '../../shared/store';
 import type playersConfigFromJSONFile from '../../shared/players.json';
 
@@ -15,8 +16,9 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  dispatchInitializePlayers: (players: typeof playersConfigFromJSONFile.players) =>
-    dispatch(initializePlayersList(players)),
+  dispatchInitializePlayers: (
+    players: typeof playersConfigFromJSONFile.players
+  ) => dispatch(initializePlayersList(players)),
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -35,26 +37,20 @@ const Players: FC<BoardProps> = ({
     dispatchInitializePlayers(playersConfig.players);
   }, []);
 
-  const mappedPlayersBox = Object.values(players).map(player => (
-    <Grid2
-      display="flex"
-      key={player.id}
-      flexDirection="column"
-    >
-      <Typography>
-        Player {player.order}
-      </Typography>
+  const mappedPlayersBox = Object.values(players).map((player) => (
+    <Grid key={player.id} flexDirection="column">
+      <Typography>Player {player.order}</Typography>
       <Typography data-testid={`${player.id}-score`}>
         {player.points}
       </Typography>
-    </Grid2>
+    </Grid>
   ));
 
   return (
     <Box>
-      <Grid2 container spacing={2}>
+      <Grid container spacing={2}>
         {mappedPlayersBox}
-      </Grid2>
+      </Grid>
     </Box>
   );
 };

@@ -3,8 +3,8 @@ import { connect, useSelector } from 'react-redux';
 import { readBoardConfig, updateGameState } from './actions';
 import { selectWinningCondition } from './selectors';
 
-import Grid2 from '@mui/material/Unstable_Grid2';
 import Box from '@mui/material/Box';
+import Grid from '../../common/Grid';
 import Square from './Square';
 
 import type { FC } from 'react';
@@ -47,10 +47,7 @@ const Board: FC<BoardProps> = ({
     dispatchInitializeBoard(boardConfig);
   }, []);
 
-  const handleSquareClick = (
-    rowIndex: number,
-    columnIndex: number,
-  ) => {
+  const handleSquareClick = (rowIndex: number, columnIndex: number) => {
     dispatchUpdateBoard({
       rowIndex,
       columnIndex,
@@ -59,11 +56,10 @@ const Board: FC<BoardProps> = ({
 
   return (
     <Box>
-      <Grid2 container spacing={1}>
+      <Grid container gap={1}>
         {board.map((row, rowIndex) => (
-          <Grid2
+          <Grid
             key={Symbol(row[0].id).toString()}
-            display="flex"
             desktop={12}
             tablet={12}
             mobile={12}
@@ -72,7 +68,7 @@ const Board: FC<BoardProps> = ({
               const coordinates = `${rowIndex},${columnIndex}`;
               const shipType = loadedShips[coordinates];
               return (
-                <Grid2 key={id} desktop={1} tablet={1} mobile={1}>
+                <Grid key={id} desktop={1} tablet={1} mobile={1}>
                   <Square
                     battleshipInfo={sunkShips[shipType]}
                     coordinates={`${rowIndex},${columnIndex}`}
@@ -81,12 +77,12 @@ const Board: FC<BoardProps> = ({
                       handleSquareClick(rowIndex, columnIndex);
                     }}
                   />
-                </Grid2>
+                </Grid>
               );
             })}
-          </Grid2>
+          </Grid>
         ))}
-      </Grid2>
+      </Grid>
     </Box>
   );
 };

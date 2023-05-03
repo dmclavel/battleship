@@ -8,16 +8,24 @@ import type {
 } from '../../shared/types/redux';
 import type boardConfig from '../../shared/board.json';
 
+type ShipLayout = {
+  ship: Ship;
+  positions: Array<Array<number>>;
+};
+
 interface Ships {
   // Ships that are hit by players
   sunkShips: { [key in Ship]?: BattleshipState };
   // Loaded ships from the board configuration
   loadedShips: { [key: string]: Ship };
+  // Ships layout from boardConfig
+  shipsLayout: Array<ShipLayout> | [];
 }
 
 const initialState: Ships = {
   sunkShips: {},
   loadedShips: {},
+  shipsLayout: [],
 };
 
 const initializeShipsReducer = (
@@ -38,6 +46,7 @@ const initializeShipsReducer = (
   });
 
   state.loadedShips = positionsObject;
+  state.shipsLayout = layout;
 
   return state;
 };

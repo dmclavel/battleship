@@ -1,12 +1,18 @@
-import { type CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 
 export type Breakpoint = 'mobile' | 'tablet' | 'desktop';
-export type Breakpoints = Record<Breakpoint, CSSProperties['width']>;
+export type Breakpoints = {
+  values: Record<Breakpoint, CSSProperties['width']>;
+  unit: 'rem' | 'px' | 'em';
+};
 
 const BREAKPOINTS: Breakpoints = {
-  mobile: '20rem',
-  tablet: '48rem',
-  desktop: '64rem',
+  values: {
+    mobile: 20,
+    tablet: 48,
+    desktop: 64,
+  },
+  unit: 'rem',
 };
 
 export { BREAKPOINTS };

@@ -1,11 +1,39 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-import type { FC } from 'react';
+import Ship from './Ship';
+import Grid from '../../common/Grid';
 
-const Ships = () => {
+import type { FC, } from 'react';
+import type { ConnectedProps } from 'react-redux';
+import type { RootState } from '../../shared/store';
+
+const mapStateToProps = (state: RootState) => ({
+  shipsLayout: state.shipsReducer.shipsLayout,
+  sunkShips: state.shipsReducer.sunkShips,
+});
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ShipsProps = PropsFromRedux;
+
+const Ships: FC<ShipsProps> = ({
+  shipsLayout,
+  sunkShips,
+}) => {
   return (
-    <div>Ships</div>
-  )
-}
+    <>
+      <Grid
+        rowGap={2}
+        flexDirection="column"
+      >
+        {shipsLayout.map(({ ship, positions }) => (
+          <Ship shipType={ship} positions={positions} sunkShips={sunkShips} />
+        ))}
+      </Grid>
+    </>
+  );
+};
 
-export default Ships;
+export default connector(Ships);

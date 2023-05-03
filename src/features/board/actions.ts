@@ -3,8 +3,8 @@ import { updatePlayer } from '../players/playersSlice';
 import { initializeShips, updateShips } from '../ships/shipsSlice';
 
 import type { Dispatch } from '@reduxjs/toolkit';
-import type boardConfig from '../../shared/board.json';
 import type { AppThunk, UpdateGamePayload } from '../../shared/types/redux';
+import type boardConfig from '../../shared/board.json';
 
 type ErrorState = {
   isError: boolean;
