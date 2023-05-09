@@ -1,25 +1,11 @@
 import React from 'react';
-import { HIT_OR_MISS_IMAGES } from '../../shared/constants/assets';
+import { HIT_OR_MISS_IMAGES, SHIP_IMAGES } from '../../shared/constants/assets';
 
 import Box from '@mui/material/Box';
 import Grid from '../../common/Grid';
 
 import type { FC } from 'react';
 import type { Ship as ShipType, BattleshipState } from '../../shared/types/redux';
-
-import battleship from '../../assets/battleship.png';
-import carrier from '../../assets/carrier.png';
-import cruiser from '../../assets/cruiser.png';
-import destroyer from '../../assets/destroyer.png';
-import submarine from '../../assets/submarine.png';
-
-const SHIP_IMAGES: { [key in ShipType]: string } = {
-  battleship,
-  carrier,
-  cruiser,
-  destroyer,
-  submarine,
-};
 
 interface ShipProps {
   positions: Array<Array<number>>;
@@ -41,8 +27,7 @@ const Ship: FC<ShipProps> = ({
   const hitOrMissCircles: Array<{
     uniqueId: string;
     imgKey: string;
-  }> = (() => (
-    positions.map((position) => {
+  }> = positions.map((position) => {
       const coordinates = position.join(',');
       const shipCoordinates = sunkShips[shipType]?.coordinates ?? {};
       const isAHit = Boolean(shipCoordinates[coordinates]);
@@ -51,8 +36,7 @@ const Ship: FC<ShipProps> = ({
         uniqueId: `hit-identifier-${coordinates}`,
         imgKey: isAHit ? 'hitSmall' : 'missSmall',
       };
-    })
-  ))().sort((a, b) => sortValue[b.imgKey] - sortValue[a.imgKey]);
+    }).sort((a, b) => sortValue[b.imgKey] - sortValue[a.imgKey]);
 
   return (
     <Grid

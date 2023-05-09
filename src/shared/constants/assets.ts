@@ -1,3 +1,11 @@
+import type { Ship as ShipType } from '../types/redux';
+
+import battleship from '../../assets/battleship.png';
+import carrier from '../../assets/carrier.png';
+import cruiser from '../../assets/cruiser.png';
+import destroyer from '../../assets/destroyer.png';
+import submarine from '../../assets/submarine.png';
+
 import hit from '../../assets/hit.png';
 import miss from '../../assets/miss.png';
 import hitSmall from '../../assets/hit-small.png';
@@ -12,4 +20,12 @@ const HIT_OR_MISS_IMAGES: {
   missSmall,
 };
 
-export { HIT_OR_MISS_IMAGES };
+const SHIP_IMAGES: { [key in ShipType]: string } = {
+  battleship,
+  carrier,
+  cruiser,
+  destroyer,
+  submarine,
+};
+
+export { HIT_OR_MISS_IMAGES, SHIP_IMAGES };
