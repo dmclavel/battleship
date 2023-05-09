@@ -4,6 +4,7 @@ import { initializePlayersList } from './actions';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
 import Grid from '../../common/Grid';
 
 import type { FC } from 'react';
@@ -33,13 +34,32 @@ const Players: FC<BoardProps> = ({
   players,
   playersConfig,
 }) => {
+  const colorScheme = ['primary.500', 'secondary.500'];
+
   useEffect(() => {
     dispatchInitializePlayers(playersConfig.players);
   }, []);
 
-  const mappedPlayersBox = Object.values(players).map((player) => (
-    <Grid key={player.id} flexDirection="column">
+  const mappedPlayersBox = Object.values(players).map((player, index) => (
+    <Grid
+      key={player.id}
+      flexDirection="column"
+      alignItems="center"
+      sx={{
+        padding: '0.5rem',
+        width: '150px',
+        color: 'grey.100',
+        backgroundColor: colorScheme[index] ?? 'primary.500',
+      }}
+    >
       <Typography>Player {player.order}</Typography>
+      <Divider 
+        sx={{
+          backgroundColor: 'grey.100',
+          width: '100%',
+          margin: '0.5rem 0',
+        }}
+      />
       <Typography data-testid={`${player.id}-score`}>
         {player.points}
       </Typography>
@@ -48,7 +68,10 @@ const Players: FC<BoardProps> = ({
 
   return (
     <Box>
-      <Grid container spacing={2}>
+      <Grid
+        container
+        width={['300px', '300px', '300px']}
+      >
         {mappedPlayersBox}
       </Grid>
     </Box>
