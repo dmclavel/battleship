@@ -61,4 +61,5 @@ const Square: FC<SquareProps> = ({
   );
 };
 
+export { type SquareProps };
 export default Square;

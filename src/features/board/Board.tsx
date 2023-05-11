@@ -56,6 +56,7 @@ const Board: FC<BoardProps> = ({
 
   return (
     <Box
+      data-testid="battleships-board"
       sx={{
         width: ['500px', '500px', '500px'],
         padding: '0.5rem',
