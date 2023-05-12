@@ -41,4 +41,5 @@ const Ships: FC<ShipsProps> = ({
   );
 };
 
+export { type ShipsProps };
 export default connector(Ships);

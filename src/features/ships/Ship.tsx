@@ -72,4 +72,5 @@ const Ship: FC<ShipProps> = ({
   );
 };
 
+export { type ShipProps };
 export default Ship;
