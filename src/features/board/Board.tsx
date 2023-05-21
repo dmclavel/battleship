@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { readBoardConfig, updateGameState } from './actions';
-import { selectWinningCondition } from './selectors';
 
 import Box from '@mui/material/Box';
 import Grid from '../../common/Grid';
@@ -31,6 +30,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type BoardProps = PropsFromRedux & {
   boardConfig: typeof boardConfigFromJSONFile;
+  hasWon: boolean;
 };
 
 const Board: FC<BoardProps> = ({
@@ -38,11 +38,10 @@ const Board: FC<BoardProps> = ({
   dispatchUpdateBoard,
   board,
   boardConfig,
+  hasWon,
   loadedShips,
   sunkShips,
 }) => {
-  const hasWon = useSelector(selectWinningCondition);
-
   useEffect(() => {
     dispatchInitializeBoard(boardConfig);
   }, []);

@@ -8,7 +8,7 @@ import boardConfig from '../../shared/board.json';
 
 const renderShips = (config = boardConfig) => render(
   <>
-    <Board boardConfig={config} />
+    <Board boardConfig={config} hasWon={false} />
     <Ships />
   </>
 );

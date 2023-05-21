@@ -6,7 +6,7 @@ import Board from './Board';
 import boardConfig from '../../shared/board.json';
 
 const renderBoardComponent = (config = boardConfig) => render(
-  <Board boardConfig={config} />,
+  <Board boardConfig={config} hasWon={false} />,
 );
 
 describe('Board', () => {
