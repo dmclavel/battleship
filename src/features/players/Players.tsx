@@ -44,10 +44,10 @@ const Players: FC<BoardProps> = ({
     <Grid
       key={player.id}
       flexDirection="column"
+      flex={1}
       alignItems="center"
       sx={{
         padding: '0.5rem',
-        width: '150px',
         color: 'grey.100',
         backgroundColor: colorScheme[index] ?? 'primary.500',
       }}
@@ -70,7 +70,6 @@ const Players: FC<BoardProps> = ({
     <Box>
       <Grid
         container
-        width={['300px', '300px', '300px']}
       >
         {mappedPlayersBox}
       </Grid>

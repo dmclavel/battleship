@@ -18,10 +18,23 @@ const Game = () => {
           '1rem',
         ],
       }}
+      justifyContent="center"
+      columnGap={[0, 0, 1]}
     >
-      <Players playersConfig={playersConfig} />
-      <Ships />
-      <Board boardConfig={boardConfig} />
+      <Grid
+        flexDirection="column"
+        order={[2, 2, 1]}
+        width={['516px', '516px', '30%']}
+        rowGap={3}
+      >
+        <Players playersConfig={playersConfig} />
+        <Ships />
+      </Grid>
+      <Grid
+        order={[1, 1, 2]}
+      >
+        <Board boardConfig={boardConfig} />
+      </Grid>
     </Grid>
   );
 };

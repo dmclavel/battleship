@@ -59,8 +59,8 @@ const Board: FC<BoardProps> = ({
       data-testid="battleships-board"
       sx={{
         width: ['500px', '500px', '500px'],
+        overflowX: ['auto', 'hidden', 'hidden'],
         padding: '0.5rem',
-        borderRadius: '4px',
         backgroundColor: 'primary.500',
       }}
     >

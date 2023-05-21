@@ -41,12 +41,12 @@ const Ship: FC<ShipProps> = ({
   return (
     <Grid
       alignItems="center"
-      columnGap={1}
+      columnGap={[1, 1, 2]}
     >
       <Box
         component="img"
         sx={{
-          width: '5rem',
+          width: ['5rem', '5rem', '8rem'],
           height: 'auto',
         }}
         alt={shipType}
@@ -59,7 +59,7 @@ const Ship: FC<ShipProps> = ({
               key={imgInfo.uniqueId}
               component="img"
               sx={{
-                width: '1rem',
+                width: ['1rem', '1rem', '1.25rem'],
                 height: 'auto',
               }}
               alt={imgInfo.imgKey === 'hitSmall' ? 'hit' : 'miss'}

@@ -26,7 +26,10 @@ const Ships: FC<ShipsProps> = ({
     <>
       <Grid
         rowGap={2}
-        flexDirection="column"
+        sx={{
+          flexFlow: 'column wrap',
+          height: ['100px', '100px', '100%']
+        }}
       >
         {shipsLayout.map(({ ship, positions }) => (
           <Ship
