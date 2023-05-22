@@ -3,12 +3,12 @@ import { useSelector } from 'react-redux';
 import { selectWinningCondition, boardImportSelector } from '../../features/board/selectors';
 
 import WinnerModal from './WinnerModal';
-import { ErrorModal } from '../../common/Modal';
+import { ErrorModal } from '../../components/common/Modal';
 import Board from '../../features/board';
 import Players from '../../features/players';
 import Ships from '../../features/ships';
-import Grid from '../../common/Grid';
-import { AriaDescriptor } from '../../common/Accessibility';
+import Grid from '../../components/common/Grid';
+import { AriaDescriptor } from '../../components/common/Accessibility';
 
 import boardConfig from '../../shared/board.json';
 import playersConfig from '../../shared/players.json';

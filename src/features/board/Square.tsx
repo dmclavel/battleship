@@ -4,15 +4,15 @@ import { HIT_OR_MISS_IMAGES } from '../../shared/constants/assets';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
-import type { FC, SyntheticEvent } from 'react';
+import type { FC, SyntheticEvent, KeyboardEvent } from 'react';
 import type { BattleshipState } from '../../shared/types/redux';
-
 interface SquareProps {
   battleshipInfo?: BattleshipState;
   coordinates: string;
   hasWon: boolean;
   isHit: boolean;
   onClick: (event: SyntheticEvent) => void;
+  onKeyDown: (event: KeyboardEvent<HTMLButtonElement>, coordinates: string) => void;
 }
 
 const Square: FC<SquareProps> = ({
@@ -21,14 +21,21 @@ const Square: FC<SquareProps> = ({
   hasWon,
   isHit,
   onClick,
+  onKeyDown,
 }) => {
   const isAMiss = useMemo(
     () => !battleshipInfo?.coordinates?.[coordinates],
     [battleshipInfo]
   );
 
+  const onKeyDownEvent = (event: KeyboardEvent<HTMLButtonElement>) => {
+    onKeyDown(event, coordinates);
+  };
+
   return (
     <Button
+      id={`board-square-${coordinates}`}
+      onKeyDown={onKeyDownEvent}
       disabled={isHit || hasWon}
       type="button"
       sx={{

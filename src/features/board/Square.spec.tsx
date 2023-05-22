@@ -14,6 +14,7 @@ const renderSquare: RenderSquareFn = ({
   hasWon,
   isHit,
   onClick,
+  onKeyDown,
 }) => render(
   <Square
     battleshipInfo={battleshipInfo}
@@ -21,6 +22,7 @@ const renderSquare: RenderSquareFn = ({
     hasWon={hasWon}
     isHit={isHit}
     onClick={onClick}
+    onKeyDown={onKeyDown}
   />,
 );
 
@@ -30,6 +32,7 @@ const defaultProps = {
   hasWon: false,
   isHit: false,
   onClick: jest.fn(),
+  onKeyDown: jest.fn(),
 };
 
 describe('Square', () => {

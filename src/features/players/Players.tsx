@@ -5,7 +5,7 @@ import { initializePlayersList } from './actions';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import Grid from '../../common/Grid';
+import Grid from '../../components/common/Grid';
 
 import type { FC } from 'react';
 import type { ConnectedProps } from 'react-redux';

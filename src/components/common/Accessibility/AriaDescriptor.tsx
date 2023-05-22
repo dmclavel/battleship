@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ARIA_DESCRIPTOR_STYLE } from '../../shared/constants/styles';
+import { ARIA_DESCRIPTOR_STYLE } from '../../../shared/constants/styles';
 
 import type { FC, ReactNode } from 'react';
 

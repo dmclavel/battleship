@@ -3,7 +3,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
-import { CENTER_MODAL_STYLE } from '../../shared/constants/styles';
+import { CENTER_MODAL_STYLE } from '../../../shared/constants/styles';
 
 import type { FC, MouseEventHandler } from 'react';
 

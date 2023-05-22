@@ -2,7 +2,7 @@ import React from 'react';
 import { HIT_OR_MISS_IMAGES, SHIP_IMAGES } from '../../shared/constants/assets';
 
 import Box from '@mui/material/Box';
-import Grid from '../../common/Grid';
+import Grid from '../../components/common/Grid';
 
 import type { FC } from 'react';
 import type { Ship as ShipType, BattleshipState } from '../../shared/types/redux';

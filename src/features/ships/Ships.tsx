@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Ship from './Ship';
-import Grid from '../../common/Grid';
+import Grid from '../../components/common/Grid';
 
 import type { FC, } from 'react';
 import type { ConnectedProps } from 'react-redux';
