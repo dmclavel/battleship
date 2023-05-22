@@ -8,7 +8,6 @@ const Navbar = () => {
   return (
     <Box
       sx={{
-        width: '100%',
         backgroundColor: 'primary.500',
         padding: '1rem',
         marginBottom: ['0.5rem', '1rem', '1.5rem']
