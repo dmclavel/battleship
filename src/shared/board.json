@@ -1,6 +1,6 @@
 {
   "shipTypes": {
-    "carrier": { "size": 5, "count": 1 },
+    "carrier": { "size": 5, "count": 2 },
     "battleship": { "size": 4, "count": 1 },
     "cruiser": { "size": 3, "count": 1 },
     "submarine": { "size": 3, "count": 1 },
@@ -8,6 +8,7 @@
   },
   "layout": [
     { "ship": "carrier", "positions": [[2,9], [3,9], [4,9], [5,9], [6,9]] },
+    { "ship": "carrier", "positions": [[9,0], [9,1], [9,2], [9,3], [9,4]] },
     { "ship": "battleship", "positions": [[5,2], [5,3], [5,4], [5,5]] },
     { "ship": "cruiser", "positions": [[8,1], [8,2], [8,3]] },
     { "ship": "submarine", "positions": [[3,0], [3,1], [3,2]] },

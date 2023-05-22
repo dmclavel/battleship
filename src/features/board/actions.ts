@@ -20,20 +20,29 @@ const validateBoardConfig = (
 
     layout.forEach(({ ship, positions }) => {
       const shipTypeInfo = shipTypes[ship as keyof typeof shipTypes];
-      if (shipTypeInfo === undefined) reject({ isError: true, message: '' });
+      if (shipTypeInfo === undefined)
+        reject({ isError: true, message: 'Ship type is invalid!' });
 
-      if (!('size' in shipTypeInfo)) reject({ isError: true, message: '' });
+      if (!('size' in shipTypeInfo))
+        reject({ isError: true, message: '"size" property missing!' });
 
-      if (!('count' in shipTypeInfo)) reject({ isError: true, message: '' });
+      if (!('count' in shipTypeInfo))
+        reject({ isError: true, message: '"count" property missing!' });
 
       if (shipTypeInfo.size !== positions.length)
-        reject({ isError: true, message: 'Unmatch positions' });
+        reject({
+          isError: true,
+          message: `Coordinates occupy ${positions.length} squares but expected ship size is ${shipTypeInfo.size}.`,
+        });
 
-      if (
-        shipTypeInfo.count !==
-        layout.filter(({ ship: ship2 }) => ship2 === ship).length
-      )
-        reject({ isError: true, message: 'Unmatch count' });
+      const shipLengthOnBoard = layout.filter(
+        ({ ship: ship2 }) => ship2 === ship
+      ).length;
+      if (shipTypeInfo.count !== shipLengthOnBoard)
+        reject({
+          isError: true,
+          message: `Ship count expected is ${shipTypeInfo.count}, but actual ship count is ${shipLengthOnBoard}.`,
+        });
     });
 
     resolve({ isError: false });

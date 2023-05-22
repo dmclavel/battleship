@@ -7,22 +7,24 @@ import { CENTER_MODAL_STYLE } from '../../shared/constants/styles';
 
 import type { FC, MouseEventHandler } from 'react';
 
-interface WinnerModalProps {
+interface ErrorModalProps {
   isOpen: boolean;
   onClose: MouseEventHandler;
+  errorMessage: string;
 }
 
-const WinnerModal: FC<WinnerModalProps> = ({
+const Error: FC<ErrorModalProps> = ({
   isOpen,
   onClose,
+  errorMessage,
 }) => {
   return (
     <Modal
-      data-testid="winning-modal"
+      data-testid="error-modal"
       open={isOpen}
       onClose={onClose}
-      aria-labelledby="winning-modal-aria-label"
-      aria-describedby="winning-modal-aria-description"
+      aria-labelledby="error-modal-aria-label"
+      aria-describedby="error-modal-aria-description"
     >
       <Box sx={{
         ...CENTER_MODAL_STYLE,
@@ -34,11 +36,11 @@ const WinnerModal: FC<WinnerModalProps> = ({
         <Typography
           textAlign="center"
         >
-          You have won. Congratulations! 🎉🎉
+          {errorMessage}
         </Typography>
       </Box>
     </Modal>
   );
 };
 
-export default WinnerModal;
+export default Error;

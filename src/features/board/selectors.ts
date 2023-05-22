@@ -1,6 +1,8 @@
 import type { RootState } from '../../shared/store';
 import type { BattleshipState, HitInfo } from '../../shared/types/redux';
 
+const boardImportSelector = (state: RootState) => state.boardReducer.import;
+
 const selectWinningCondition = (state: RootState) => {
   const loadedShips = state.shipsReducer.loadedShips;
   const sunkShips = state.shipsReducer.sunkShips;
@@ -25,4 +27,4 @@ const selectWinningCondition = (state: RootState) => {
   return allShipsSunk;
 };
 
-export { selectWinningCondition };
+export { selectWinningCondition, boardImportSelector };

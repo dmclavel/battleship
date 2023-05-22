@@ -1,23 +1,30 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectWinningCondition } from '../../features/board/selectors';
+import { selectWinningCondition, boardImportSelector } from '../../features/board/selectors';
 
 import WinnerModal from './WinnerModal';
+import { ErrorModal } from '../../common/Modal';
 import Board from '../../features/board';
 import Players from '../../features/players';
 import Ships from '../../features/ships';
 import Grid from '../../common/Grid';
-import AriaDescriptor from '../../common/Accessibility/AriaDescriptor';
+import { AriaDescriptor } from '../../common/Accessibility';
 
 import boardConfig from '../../shared/board.json';
 import playersConfig from '../../shared/players.json';
 
 const Game = () => {
   const hasWon = useSelector(selectWinningCondition);
-  const [openModal, setOpenModal] = useState(true);
+  const importInfo = useSelector(boardImportSelector);
+  const [openWinningModal, setOpenWinningModal] = useState(true);
+  const [openErrorModal, setOpenErrorModal] = useState(true);
 
-  const handleModalClose = () => {
-    setOpenModal(false);
+  const handleWinningModalClose = () => {
+    setOpenWinningModal(false);
+  };
+
+  const handleErrorModalClose = () => {
+    setOpenErrorModal(false);
   };
 
   return (
@@ -47,13 +54,24 @@ const Game = () => {
       >
         <Board boardConfig={boardConfig} hasWon={hasWon} />
       </Grid>
+      <AriaDescriptor id="error-modal-aria-label">
+        Error Dialog
+      </AriaDescriptor>
+      <AriaDescriptor id="error-modal-aria-description">
+        An error occured when importing board configuration.
+      </AriaDescriptor>
+      <ErrorModal
+        isOpen={openErrorModal && importInfo.status === 'error'}
+        onClose={handleErrorModalClose}
+        errorMessage={importInfo.message ?? ''}
+      />
       <AriaDescriptor id="winning-modal-aria-label">
         Winning Dialog
       </AriaDescriptor>
       <AriaDescriptor id="winning-modal-aria-description">
         All ships are hit. Player has won!
       </AriaDescriptor>
-      <WinnerModal isOpen={hasWon && openModal} onClose={handleModalClose} />
+      <WinnerModal isOpen={hasWon && openWinningModal && importInfo.status !== 'error'} onClose={handleWinningModalClose} />
     </Grid>
   );
 };
