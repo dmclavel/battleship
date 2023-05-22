@@ -48,7 +48,7 @@ const Square: FC<SquareProps> = ({
         borderColor: 'grey.300',
         backgroundColor: 'grey.100',
         '&:hover': {
-          backgroundColor: 'primary.500',
+          backgroundColor: ['primary.100', 'primary.500'],
         },
       }}
       onClick={onClick}
