@@ -8,17 +8,10 @@ import type { RenderResult } from 'test-utils';
 
 type RenderShipFn = (props: ShipProps) => RenderResult;
 
-const renderShip: RenderShipFn = ({
-  positions,
-  shipType,
-  sunkShips,
-}) => render(
-  <Ship
-    positions={positions}
-    shipType={shipType}
-    sunkShips={sunkShips}
-  />
-);
+const renderShip: RenderShipFn = ({ positions, shipType, sunkShips }) =>
+  render(
+    <Ship positions={positions} shipType={shipType} sunkShips={sunkShips} />
+  );
 
 const defaultProps: ShipProps = {
   positions: [
@@ -34,7 +27,7 @@ const defaultProps: ShipProps = {
       coordinates: {
         '3,9': 1,
       },
-    }
+    },
   },
 };
 

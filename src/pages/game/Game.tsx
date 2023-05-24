@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectWinningCondition, boardImportSelector } from '../../features/board/selectors';
+import {
+  selectWinningCondition,
+  boardImportSelector,
+} from '../../features/board/selectors';
 
 import WinnerModal from './WinnerModal';
 import { ErrorModal } from '../../components/common/Modal';
@@ -41,11 +44,7 @@ const Game: FC<Partial<GameProps>> = ({
     <Grid
       container
       sx={{
-        padding: [
-          '0.5rem',
-          '0.75rem',
-          '1rem',
-        ],
+        padding: ['0.5rem', '0.75rem', '1rem'],
       }}
       justifyContent="center"
       columnGap={[0, 0, 1]}
@@ -59,14 +58,10 @@ const Game: FC<Partial<GameProps>> = ({
         <Players playersConfig={playersConfig} />
         <Ships />
       </Grid>
-      <Grid
-        order={[1, 1, 2]}
-      >
+      <Grid order={[1, 1, 2]}>
         <Board boardConfig={boardConfig} hasWon={hasWon} />
       </Grid>
-      <AriaDescriptor id="error-modal-aria-label">
-        Error Dialog
-      </AriaDescriptor>
+      <AriaDescriptor id="error-modal-aria-label">Error Dialog</AriaDescriptor>
       <AriaDescriptor id="error-modal-aria-description">
         An error occured when importing board configuration.
       </AriaDescriptor>
@@ -81,7 +76,10 @@ const Game: FC<Partial<GameProps>> = ({
       <AriaDescriptor id="winning-modal-aria-description">
         All ships are hit. Player has won!
       </AriaDescriptor>
-      <WinnerModal isOpen={hasWon && openWinningModal && importInfo.status !== 'error'} onClose={handleWinningModalClose} />
+      <WinnerModal
+        isOpen={hasWon && openWinningModal && importInfo.status !== 'error'}
+        onClose={handleWinningModalClose}
+      />
     </Grid>
   );
 };

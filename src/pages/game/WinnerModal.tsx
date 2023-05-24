@@ -12,10 +12,7 @@ interface WinnerModalProps {
   onClose: MouseEventHandler;
 }
 
-const WinnerModal: FC<WinnerModalProps> = ({
-  isOpen,
-  onClose,
-}) => {
+const WinnerModal: FC<WinnerModalProps> = ({ isOpen, onClose }) => {
   return (
     <Modal
       data-testid="winning-modal"
@@ -24,16 +21,16 @@ const WinnerModal: FC<WinnerModalProps> = ({
       aria-labelledby="winning-modal-aria-label"
       aria-describedby="winning-modal-aria-description"
     >
-      <Box sx={{
-        ...CENTER_MODAL_STYLE,
-        width: ['80%', 'inherit'],
-        padding: ['0.5rem', '2rem'],
-        backgroundColor: 'grey.100',
-        borderRadius: '4px',
-      }}>
-        <Typography
-          textAlign="center"
-        >
+      <Box
+        sx={{
+          ...CENTER_MODAL_STYLE,
+          width: ['80%', 'inherit'],
+          padding: ['0.5rem', '2rem'],
+          backgroundColor: 'grey.100',
+          borderRadius: '4px',
+        }}
+      >
+        <Typography textAlign="center">
           You have won. Congratulations! 🎉🎉
         </Typography>
       </Box>

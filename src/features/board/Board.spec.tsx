@@ -5,9 +5,8 @@ import Board from './Board';
 
 import boardConfig from '../../shared/board.json';
 
-const renderBoardComponent = (config = boardConfig) => render(
-  <Board boardConfig={config} hasWon={false} />,
-);
+const renderBoardComponent = (config = boardConfig) =>
+  render(<Board boardConfig={config} hasWon={false} />);
 
 describe('Board', () => {
   it('should render 10 x 10 squares', async () => {

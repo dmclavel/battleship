@@ -10,7 +10,7 @@ const Navbar = () => {
       sx={{
         backgroundColor: 'primary.500',
         padding: '1rem',
-        marginBottom: ['0.5rem', '1rem', '1.5rem']
+        marginBottom: ['0.5rem', '1rem', '1.5rem'],
       }}
     >
       <Grid container>

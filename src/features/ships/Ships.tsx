@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Ship from './Ship';
 import Grid from '../../components/common/Grid';
 
-import type { FC, } from 'react';
+import type { FC } from 'react';
 import type { ConnectedProps } from 'react-redux';
 import type { RootState } from '../../shared/store';
 
@@ -18,17 +18,14 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ShipsProps = PropsFromRedux;
 
-const Ships: FC<ShipsProps> = ({
-  shipsLayout,
-  sunkShips,
-}) => {
+const Ships: FC<ShipsProps> = ({ shipsLayout, sunkShips }) => {
   return (
     <>
       <Grid
         rowGap={2}
         sx={{
           flexFlow: 'column wrap',
-          height: ['100px', '100px', '100%']
+          height: ['100px', '100px', '100%'],
         }}
       >
         {shipsLayout.map(({ ship, positions }) => (

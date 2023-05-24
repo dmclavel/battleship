@@ -53,7 +53,11 @@ const Board: FC<BoardProps> = ({
     });
   };
 
-  const getNearestFocusableButton = (keyPressCode: string, row: number, col: number) => {
+  const getNearestFocusableButton = (
+    keyPressCode: string,
+    row: number,
+    col: number
+  ) => {
     let correctRow = row;
     let correctCol = col;
     switch (keyPressCode) {
@@ -89,27 +93,39 @@ const Board: FC<BoardProps> = ({
         }
         break;
       }
-      default: break;
+      default:
+        break;
     }
 
     const buttonId = `board-square-${correctRow},${correctCol}`;
     let buttonEl = document.getElementById(buttonId) as HTMLButtonElement;
     if (buttonEl instanceof HTMLButtonElement) {
       while (buttonEl.disabled) {
-        buttonEl = getNearestFocusableButton(keyPressCode, correctRow, correctCol) as HTMLButtonElement;
+        buttonEl = getNearestFocusableButton(
+          keyPressCode,
+          correctRow,
+          correctCol
+        ) as HTMLButtonElement;
       }
 
       return buttonEl;
     }
-    
+
     return null;
   };
 
-  const handleSquareKeyDown = (event: KeyboardEvent<HTMLButtonElement>, coordinates: string) => {
+  const handleSquareKeyDown = (
+    event: KeyboardEvent<HTMLButtonElement>,
+    coordinates: string
+  ) => {
     const [row, column] = coordinates.split(',');
     const parsedRow = parseInt(row, 10);
     const parsedCol = parseInt(column, 10);
-    const buttonEl = getNearestFocusableButton(event.code, parsedRow, parsedCol);
+    const buttonEl = getNearestFocusableButton(
+      event.code,
+      parsedRow,
+      parsedCol
+    );
     if (buttonEl instanceof HTMLButtonElement) {
       buttonEl.focus();
     }
@@ -143,9 +159,7 @@ const Board: FC<BoardProps> = ({
               const coordinates = `${rowIndex},${columnIndex}`;
               const shipType = loadedShips[coordinates];
               return (
-                <Grid
-                  key={id}
-                >
+                <Grid key={id}>
                   <Square
                     battleshipInfo={sunkShips[shipType]}
                     coordinates={`${rowIndex},${columnIndex}`}

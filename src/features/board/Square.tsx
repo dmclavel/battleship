@@ -12,7 +12,10 @@ interface SquareProps {
   hasWon: boolean;
   isHit: boolean;
   onClick: (event: SyntheticEvent) => void;
-  onKeyDown: (event: KeyboardEvent<HTMLButtonElement>, coordinates: string) => void;
+  onKeyDown: (
+    event: KeyboardEvent<HTMLButtonElement>,
+    coordinates: string
+  ) => void;
 }
 
 const Square: FC<SquareProps> = ({

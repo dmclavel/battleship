@@ -8,7 +8,6 @@ import store from './shared/store';
 
 import { generateFontSize } from './shared/utils/styles';
 
-
 declare global {
   interface Window {
     generateFontSize: typeof generateFontSize;

@@ -6,7 +6,7 @@ import type {
   BattleshipState,
   UpdateGamePayload,
 } from '../../shared/types/redux';
-import { BoardConfigType } from '../../shared/types/board';
+import type { BoardConfigType } from '../../shared/types/board';
 
 type ShipLayout = {
   ship: Ship;

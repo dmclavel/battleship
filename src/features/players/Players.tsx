@@ -53,7 +53,7 @@ const Players: FC<BoardProps> = ({
       }}
     >
       <Typography>Player {player.order}</Typography>
-      <Divider 
+      <Divider
         sx={{
           backgroundColor: 'grey.100',
           width: '100%',
@@ -68,11 +68,7 @@ const Players: FC<BoardProps> = ({
 
   return (
     <Box>
-      <Grid
-        container
-      >
-        {mappedPlayersBox}
-      </Grid>
+      <Grid container>{mappedPlayersBox}</Grid>
     </Box>
   );
 };

@@ -9,15 +9,9 @@ interface AriaDescriptorProps {
   children: ReactNode;
 }
 
-const AriaDescriptor: FC<AriaDescriptorProps> = ({
-  id,
-  children,
-}) => {
+const AriaDescriptor: FC<AriaDescriptorProps> = ({ id, children }) => {
   return (
-    <div
-      id={id}
-      style={{ ...ARIA_DESCRIPTOR_STYLE }}
-    >
+    <div id={id} style={{ ...ARIA_DESCRIPTOR_STYLE }}>
       {children}
     </div>
   );

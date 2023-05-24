@@ -15,16 +15,17 @@ const renderSquare: RenderSquareFn = ({
   isHit,
   onClick,
   onKeyDown,
-}) => render(
-  <Square
-    battleshipInfo={battleshipInfo}
-    coordinates={coordinates}
-    hasWon={hasWon}
-    isHit={isHit}
-    onClick={onClick}
-    onKeyDown={onKeyDown}
-  />,
-);
+}) =>
+  render(
+    <Square
+      battleshipInfo={battleshipInfo}
+      coordinates={coordinates}
+      hasWon={hasWon}
+      isHit={isHit}
+      onClick={onClick}
+      onKeyDown={onKeyDown}
+    />
+  );
 
 const defaultProps = {
   battleshipInfo: {},

@@ -1,4 +1,4 @@
-import customBoardConfig from '../board.json';
+import type customBoardConfig from '../board.json';
 
 type BoardConfigType = {
   shipTypes: Partial<typeof customBoardConfig.shipTypes>;

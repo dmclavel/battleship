@@ -6,12 +6,13 @@ import Board from '../board';
 
 import boardConfig from '../../shared/board.json';
 
-const renderShips = (config = boardConfig) => render(
-  <>
-    <Board boardConfig={config} hasWon={false} />
-    <Ships />
-  </>
-);
+const renderShips = (config = boardConfig) =>
+  render(
+    <>
+      <Board boardConfig={config} hasWon={false} />
+      <Ships />
+    </>
+  );
 
 describe('Ships', () => {
   it('should render ships based on board.json', async () => {
@@ -24,7 +25,7 @@ describe('Ships', () => {
 
     const resolvedElements = await Promise.all(asyncProcesses);
     resolvedElements.forEach((elements) => {
-      elements.forEach(element => expect(element).toBeInTheDocument());
+      elements.forEach((element) => expect(element).toBeInTheDocument());
     });
   });
 });

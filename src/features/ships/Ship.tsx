@@ -5,7 +5,10 @@ import Box from '@mui/material/Box';
 import Grid from '../../components/common/Grid';
 
 import type { FC } from 'react';
-import type { Ship as ShipType, BattleshipState } from '../../shared/types/redux';
+import type {
+  Ship as ShipType,
+  BattleshipState,
+} from '../../shared/types/redux';
 
 interface ShipProps {
   positions: Array<Array<number>>;
@@ -13,11 +16,7 @@ interface ShipProps {
   sunkShips: { [key in ShipType]?: BattleshipState };
 }
 
-const Ship: FC<ShipProps> = ({
-  positions,
-  shipType,
-  sunkShips,
-}) => {
+const Ship: FC<ShipProps> = ({ positions, shipType, sunkShips }) => {
   const sortValue: {
     [key in 'hitSmall' | 'missSmall' | (string & {})]: 1 | -1;
   } = {
@@ -27,7 +26,8 @@ const Ship: FC<ShipProps> = ({
   const hitOrMissCircles: Array<{
     uniqueId: string;
     imgKey: string;
-  }> = positions.map((position) => {
+  }> = positions
+    .map((position) => {
       const coordinates = position.join(',');
       const shipCoordinates = sunkShips[shipType]?.coordinates ?? {};
       const isAHit = Boolean(shipCoordinates[coordinates]);
@@ -36,13 +36,11 @@ const Ship: FC<ShipProps> = ({
         uniqueId: `hit-identifier-${coordinates}`,
         imgKey: isAHit ? 'hitSmall' : 'missSmall',
       };
-    }).sort((a, b) => sortValue[b.imgKey] - sortValue[a.imgKey]);
+    })
+    .sort((a, b) => sortValue[b.imgKey] - sortValue[a.imgKey]);
 
   return (
-    <Grid
-      alignItems="center"
-      columnGap={[1, 1, 2]}
-    >
+    <Grid alignItems="center" columnGap={[1, 1, 2]}>
       <Box
         component="img"
         sx={{
@@ -63,7 +61,9 @@ const Ship: FC<ShipProps> = ({
                 height: 'auto',
               }}
               alt={imgInfo.imgKey === 'hitSmall' ? 'hit' : 'miss'}
-              src={HIT_OR_MISS_IMAGES[imgInfo.imgKey as ('hitSmall' | 'missSmall')]}
+              src={
+                HIT_OR_MISS_IMAGES[imgInfo.imgKey as 'hitSmall' | 'missSmall']
+              }
             />
           );
         })}

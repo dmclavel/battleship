@@ -5,9 +5,7 @@ import type { FC } from 'react';
 import type { Grid2Props } from '@mui/material/Unstable_Grid2';
 
 const Grid: FC<Grid2Props> = (props) => {
-  return (
-    <Grid2 display="flex" {...props} />
-  );
+  return <Grid2 display="flex" {...props} />;
 };
 
 export default Grid;
