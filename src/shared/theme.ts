@@ -6,8 +6,10 @@ import {
   FEEDBACK,
   type FeedbackPalette,
 } from './constants/colors';
-import { BREAKPOINTS, type Breakpoints } from './constants/breakpoints';
+import { BREAKPOINTS } from './constants/breakpoints';
 import { TYPOGRAPHIES } from './constants/typography';
+
+import type { Breakpoints } from './constants/breakpoints';
 
 declare module '@mui/material/styles' {
   interface PaletteOptions {

@@ -17,7 +17,7 @@ const Navbar = () => {
         <Grid flexGrow={1} justifyContent="center">
           <Typography
             color="grey.100"
-            fontSize={['fontSizes.md', 'fontSizes.xl', 'fontSizes.2xl']}
+            fontSize={window.generateFontSize(['lg', '2xl', '3xl'])}
           >
             Battleship Application
           </Typography>

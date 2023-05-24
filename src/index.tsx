@@ -6,6 +6,17 @@ import App from './App';
 import theme from './shared/theme';
 import store from './shared/store';
 
+import { generateFontSize } from './shared/utils/styles';
+
+
+declare global {
+  interface Window {
+    generateFontSize: typeof generateFontSize;
+  }
+}
+
+window.generateFontSize = generateFontSize;
+
 const container = document.getElementById('app') as HTMLElement;
 const root = createRoot(container);
 root.render(
