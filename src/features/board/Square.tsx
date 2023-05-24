@@ -34,6 +34,7 @@ const Square: FC<SquareProps> = ({
 
   return (
     <Button
+      data-testid={`board-square-${coordinates}`}
       id={`board-square-${coordinates}`}
       onKeyDown={onKeyDownEvent}
       disabled={isHit || hasWon}

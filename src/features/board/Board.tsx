@@ -10,7 +10,7 @@ import type { FC, KeyboardEvent } from 'react';
 import type { ConnectedProps } from 'react-redux';
 import type { AppDispatch, RootState } from '../../shared/store';
 import type { UpdateGamePayload } from '../../shared/types/redux';
-import type boardConfigFromJSONFile from '../../shared/board.json';
+import type { BoardConfigType } from '../../shared/types/board';
 
 const mapStateToProps = (state: RootState) => ({
   board: state.boardReducer.board,
@@ -19,7 +19,7 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  dispatchInitializeBoard: (boardConfig: typeof boardConfigFromJSONFile) =>
+  dispatchInitializeBoard: (boardConfig: BoardConfigType) =>
     dispatch(readBoardConfig(boardConfig)),
   dispatchUpdateBoard: (payload: UpdateGamePayload) =>
     dispatch(updateGameState(payload)),
@@ -29,7 +29,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type BoardProps = PropsFromRedux & {
-  boardConfig: typeof boardConfigFromJSONFile;
+  boardConfig: BoardConfigType;
   hasWon: boolean;
 };
 

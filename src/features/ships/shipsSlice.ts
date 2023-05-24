@@ -6,7 +6,7 @@ import type {
   BattleshipState,
   UpdateGamePayload,
 } from '../../shared/types/redux';
-import type boardConfig from '../../shared/board.json';
+import { BoardConfigType } from '../../shared/types/board';
 
 type ShipLayout = {
   ship: Ship;
@@ -30,7 +30,7 @@ const initialState: Ships = {
 
 const initializeShipsReducer = (
   state: Ships,
-  action: PayloadAction<typeof boardConfig>
+  action: PayloadAction<BoardConfigType>
 ) => {
   const { layout } = action.payload;
 

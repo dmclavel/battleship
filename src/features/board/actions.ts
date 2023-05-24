@@ -4,7 +4,7 @@ import { initializeShips, updateShips } from '../ships/shipsSlice';
 
 import type { Dispatch } from '@reduxjs/toolkit';
 import type { AppThunk, UpdateGamePayload } from '../../shared/types/redux';
-import type boardConfig from '../../shared/board.json';
+import type { BoardConfigType } from '../../shared/types/board';
 
 type ErrorState = {
   isError: boolean;
@@ -13,7 +13,7 @@ type ErrorState = {
 type BoardConfigValidation = Promise<ErrorState>;
 
 const validateBoardConfig = (
-  boardConfigObj: typeof boardConfig
+  boardConfigObj: BoardConfigType
 ): BoardConfigValidation =>
   new Promise((resolve, reject) => {
     const { shipTypes, layout } = boardConfigObj;
@@ -23,13 +23,13 @@ const validateBoardConfig = (
       if (shipTypeInfo === undefined)
         reject({ isError: true, message: 'Ship type is invalid!' });
 
-      if (!('size' in shipTypeInfo))
+      if (shipTypeInfo && !('size' in shipTypeInfo))
         reject({ isError: true, message: '"size" property missing!' });
 
-      if (!('count' in shipTypeInfo))
+      if (shipTypeInfo && !('count' in shipTypeInfo))
         reject({ isError: true, message: '"count" property missing!' });
 
-      if (shipTypeInfo.size !== positions.length)
+      if (shipTypeInfo && shipTypeInfo.size !== positions.length)
         reject({
           isError: true,
           message: `Coordinates occupy ${positions.length} squares but expected ship size is ${shipTypeInfo.size}.`,
@@ -38,7 +38,7 @@ const validateBoardConfig = (
       const shipLengthOnBoard = layout.filter(
         ({ ship: ship2 }) => ship2 === ship
       ).length;
-      if (shipTypeInfo.count !== shipLengthOnBoard)
+      if (shipTypeInfo && shipTypeInfo.count !== shipLengthOnBoard)
         reject({
           isError: true,
           message: `Ship count expected is ${shipTypeInfo.count}, but actual ship count is ${shipLengthOnBoard}.`,
@@ -48,7 +48,7 @@ const validateBoardConfig = (
     resolve({ isError: false });
   });
 
-const readBoardConfig = (boardConfigObj: typeof boardConfig): AppThunk => {
+const readBoardConfig = (boardConfigObj: BoardConfigType): AppThunk => {
   return async (dispatch: Dispatch) => {
     try {
       await validateBoardConfig(boardConfigObj);

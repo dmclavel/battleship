@@ -35,6 +35,7 @@ const Error: FC<ErrorModalProps> = ({
       }}>
         <Typography
           textAlign="center"
+          color="feedback.error"
         >
           {errorMessage}
         </Typography>

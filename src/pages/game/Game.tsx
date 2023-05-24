@@ -10,10 +10,20 @@ import Ships from '../../features/ships';
 import Grid from '../../components/common/Grid';
 import { AriaDescriptor } from '../../components/common/Accessibility';
 
-import boardConfig from '../../shared/board.json';
-import playersConfig from '../../shared/players.json';
+import customBoardConfig from '../../shared/board.json';
+import customPlayersConfig from '../../shared/players.json';
 
-const Game = () => {
+import type { FC } from 'react';
+import type { BoardConfigType } from '../../shared/types/board';
+interface GameProps {
+  boardConfig: BoardConfigType;
+  playersConfig: typeof customPlayersConfig;
+}
+
+const Game: FC<Partial<GameProps>> = ({
+  boardConfig = customBoardConfig,
+  playersConfig = customPlayersConfig,
+}) => {
   const hasWon = useSelector(selectWinningCondition);
   const importInfo = useSelector(boardImportSelector);
   const [openWinningModal, setOpenWinningModal] = useState(true);
@@ -76,4 +86,5 @@ const Game = () => {
   );
 };
 
+export type { GameProps };
 export default Game;

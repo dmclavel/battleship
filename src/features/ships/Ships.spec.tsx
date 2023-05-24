@@ -17,12 +17,14 @@ describe('Ships', () => {
   it('should render ships based on board.json', async () => {
     renderShips();
 
-    const asyncProcesses: Array<Promise<HTMLElement>> = [];
+    const asyncProcesses: Array<Promise<Array<HTMLElement>>> = [];
     Object.keys(boardConfig.shipTypes).forEach((shipType) => {
-      asyncProcesses.push(screen.findByAltText(shipType));
+      asyncProcesses.push(screen.findAllByAltText(shipType));
     });
 
     const resolvedElements = await Promise.all(asyncProcesses);
-    resolvedElements.forEach((element) => expect(element).toBeInTheDocument());
+    resolvedElements.forEach((elements) => {
+      elements.forEach(element => expect(element).toBeInTheDocument());
+    });
   });
 });
