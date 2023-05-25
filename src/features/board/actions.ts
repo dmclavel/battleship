@@ -17,6 +17,7 @@ const validateBoardConfig = (
 ): BoardConfigValidation =>
   new Promise((resolve, reject) => {
     const { shipTypes, layout } = boardConfigObj;
+    const tempStorage: { [key: string]: 1 } = {};
 
     layout.forEach(({ ship, positions }) => {
       const shipTypeInfo = shipTypes[ship as keyof typeof shipTypes];
@@ -43,6 +44,16 @@ const validateBoardConfig = (
           isError: true,
           message: `Ship count expected is ${shipTypeInfo.count}, but actual ship count is ${shipLengthOnBoard}.`,
         });
+
+      positions.forEach((position) => {
+        if (tempStorage[position.join(',')]) {
+          reject({
+            isError: true,
+            message: `Ships overlap on ${position} coordinates.`,
+          });
+        }
+        tempStorage[position.join(',')] = 1;
+      });
     });
 
     resolve({ isError: false });
