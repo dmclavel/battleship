@@ -43,6 +43,19 @@ const validateBoardConfig = (
           isError: true,
           message: `Ship count expected is ${shipTypeInfo.count}, but actual ship count is ${shipLengthOnBoard}.`,
         });
+
+      const tempStorage: { [key: string]: 1 } = {};
+      layout.forEach(({ positions }) => {
+        positions.forEach((position) => {
+          if (tempStorage[position.join(',')]) {
+            reject({
+              isError: true,
+              message: `Ships overlap on ${position} coordinates.`,
+            });
+          }
+          tempStorage[position.join(',')] = 1;
+        });
+      });
     });
 
     resolve({ isError: false });
