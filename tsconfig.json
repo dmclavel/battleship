@@ -25,6 +25,6 @@
       "test-utils": ["./src/test-utils"]
     }
   },
-  "include": ["src", ".eslintrc.js"], // Specifies the directory to include for compilation
+  "include": ["src", ".eslintrc.js", "workbox-config.js"], // Specifies the directory to include for compilation
   "exclude": ["node_modules", "dist"] // Specifies the directories to exclude from compilation
 }
