@@ -1,6 +1,6 @@
-const sw = 'service-worker.js';
-
 try {
+  const sw = 'service-worker.js';
+
   navigator.serviceWorker
     .register(sw)
     .then((registration) => {
